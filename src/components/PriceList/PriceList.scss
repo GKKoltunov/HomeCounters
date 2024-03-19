@@ -1,0 +1,13 @@
+.price{
+  &__heading{
+text-align: center;
+color: white;
+  }
+  &__article{
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: white;
+  }
+}

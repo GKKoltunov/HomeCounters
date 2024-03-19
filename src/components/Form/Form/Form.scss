@@ -1,0 +1,53 @@
+.authorization {
+  width: 50%;
+  height: 50%;
+  padding: 30px 40px;
+  outline: 1px solid white;
+  margin: 0 auto;
+  margin-top: 200px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 700px;
+
+  &__form {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    align-items: center;
+  }
+
+  &__btn{
+    width: 150px;
+    
+  }
+  &__login {
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    height: 30px;
+    padding: 2px 10px
+  }
+
+   &__password {
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    height: 30px;
+    padding: 2px 10px
+  }
+  
+  &__label{
+    width: 100%;
+  }
+}
+
+
+h1{
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+}

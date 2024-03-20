@@ -4,10 +4,12 @@ text-align: center;
 color: white;
   }
   &__article{
+    padding: 5px;
     padding-top: 30px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     color: white;
+    outline: 1px solid;
   }
 }

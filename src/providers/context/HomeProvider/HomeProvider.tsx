@@ -40,7 +40,7 @@ export const HomeProvider = ({ children }: Children) => {
   const deltaHot = +hotCounter - +preMonth?.hot;
   const deltaCold = +coldCounter - +preMonth?.cold;
   const deltaElectricity = +hotCounter - +preMonth?.hot;
-  const deltaDrainage = +hotCounter - +preMonth?.hot;
+  const deltaDrainage = deltaHot + deltaCold;
 
   const sum =
     deltaHot * +price.hot +

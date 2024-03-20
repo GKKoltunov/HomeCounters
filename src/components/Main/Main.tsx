@@ -45,56 +45,46 @@ export const Main = ({ createPortal, setIsOpen }: Props) => {
             >
               <AddCircleOutlineOutlinedIcon />
             </button>
-            <button className="logout" onClick={()=>{fetchDelete!()}}>
+            <button
+              className="logout"
+              onClick={() => {
+                fetchDelete!();
+              }}
+            >
               <DeleteOutlineOutlinedIcon />
             </button>
             <p>Выберите период:</p>
             <SelectAutoWidth />
           </div>
         </div>
-        <div className="calc__data">
-          <div className="calc__data-value">
-            <p>Горячая вода ♨️</p>
-            {value === "" ? null : (
-              <>
-                <p>{hotCounter}</p>
-                <p>{deltaHot}</p>
-              </>
-            )}
-          </div>
-          <div className="calc__data-value">
-            <p>Холодная вода 💧</p>
-            {value === "" ? null : (
-              <>
-                <p>{coldCounter}</p>
-                <p>{deltaCold}</p>
-              </>
-            )}
-          </div>
-          <div className="calc__data-value">
-            <p>Водоотвод 🚿</p>
-            {value === "" ? null : (
-              <>
-                <p>{drainageCounter}</p>
-                <p>{deltaDrainage}</p>
-              </>
-            )}
-          </div>
-          <div className="calc__data-value">
-            <p>Электричество 💡</p>
-            {value === "" ? null : (
-              <>
-                <p>{electricityCounter}</p>
-                <p>{deltaElectricity}</p>
-              </>
-            )}
-          </div>
-        </div>
+        <table>
+          <tr>
+            <td></td>
+            <th>Горячая вода ♨️</th>
+            <th>Холодная вода 💧</th>
+            <th>Водоотвод 🚿</th>
+            <th>Электричество 💡</th>
+          </tr>
+          <tr>
+            <th>Показания:</th>
+            <td>{hotCounter}</td>
+            <td>{coldCounter}</td>
+            <td>{drainageCounter}</td>
+            <td>{electricityCounter}</td>
+          </tr>
+          <tr>
+            <th>Расход:</th>
+            <td>{deltaHot}</td>
+            <td>{deltaCold}</td>
+            <td>{deltaDrainage}</td>
+            <td>{deltaElectricity}</td>
+          </tr>
+        </table>
         <div className="calc__money">
           <p>Сумма за месяц:</p>
           {value === "" ? null : (
             <>
-              <p>{sum},руб</p>
+              <p>{sum} руб</p>
             </>
           )}
         </div>

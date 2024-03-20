@@ -2,10 +2,16 @@ import { useContext } from "react";
 import { PriceList } from "../PriceList/PriceList";
 import SelectAutoWidth from "../Select/Select";
 import "./Main.scss";
-
+import LogoutIcon from "@mui/icons-material/Logout";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { HomeContext } from "../../providers/context/HomeProvider/HomeContext";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-export const Main = () => {
+type Props = {
+  createPortal: () => void;
+  setIsOpen: (isOpen: boolean) => void;
+};
+export const Main = ({ createPortal, setIsOpen }: Props) => {
   const {
     hotCounter,
     coldCounter,
@@ -17,15 +23,34 @@ export const Main = () => {
     deltaDrainage,
     sum,
     value,
-   
+    logout,
+    fetchDelete,
   } = useContext(HomeContext);
 
   return (
     <section className="container">
       <div className="calc">
         <div className="calc__period">
-          <p>Выберите период:</p>
-          <SelectAutoWidth />
+          <button onClick={logout} className="logout">
+            <LogoutIcon />
+          </button>
+
+          <div className="calc__period">
+            <button
+              onClick={() => {
+                setIsOpen(true);
+                createPortal();
+              }}
+              className="logout"
+            >
+              <AddCircleOutlineOutlinedIcon />
+            </button>
+            <button className="logout" onClick={()=>{fetchDelete!()}}>
+              <DeleteOutlineOutlinedIcon />
+            </button>
+            <p>Выберите период:</p>
+            <SelectAutoWidth />
+          </div>
         </div>
         <div className="calc__data">
           <div className="calc__data-value">

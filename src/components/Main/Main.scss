@@ -20,8 +20,9 @@ background-color: rgb(89, 91, 205);
 &__period{
 height: 20%;
 display: flex;
-justify-content: end;
+justify-content: space-between;
 align-items: center;
+gap: 20px;
 }
 
 &__data{
@@ -42,4 +43,16 @@ align-items: center;
   width: 20%;
   background-color: rgb(89, 91, 205);
 
+}
+
+.logout{
+  border: none;
+  background-color: rgb(89, 91, 205);
+  color: white;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.logout:hover{
+  transform: scale(130%);
 }

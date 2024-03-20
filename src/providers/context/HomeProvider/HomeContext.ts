@@ -14,7 +14,8 @@ interface TypeContext {
       drainage: string;
     }>;
   };
-  fetchPrice?: () => void;
+  fetchPrice?: () => Object;
+  fetchDelete?: () => Object;
   value?: string;
   handleChange?: (event: SelectChangeEvent) => void;
   findID?: () => void;
@@ -30,6 +31,7 @@ interface TypeContext {
   deltaElectricity?: number | string;
   deltaDrainage?: number | string;
   sum?: number | string;
+  logout?: () => void;
 }
 
 

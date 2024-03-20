@@ -2,6 +2,8 @@ import { HomeContext } from "./HomeContext";
 import { useEffect, useState } from "react";
 import api from "../../../api";
 import { SelectChangeEvent } from "@mui/material/Select";
+import { removeCookie } from "typescript-cookie";
+import { useNavigate } from "react-router-dom";
 type Children = {
   children: any;
 };
@@ -24,33 +26,7 @@ export const HomeProvider = ({ children }: Children) => {
   const [value, setValue] = useState("");
   const [currentID, setcurrentID] = useState("");
   const [currentMonth, setCurrentMonth] = useState(list.period[0]);
-
-  async function fetchPrice() {
-    // загрузка данных для авторизванного пользователя
-    try {
-      const res = await api.getPrice();
-      setList(res);
-      console.log(res);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  const handleChange = (event: SelectChangeEvent) => {
-    //изменение значения селект
-    setValue(event.target.value);
-  };
-
-  function findID() {
-    //находим id выбранного периода
-
-    if (list.period.length !== 0) {
-      let periods = list.period;
-      let currentElem = periods.find((el) => Object.values(el).includes(value));
-      setcurrentID(currentElem?._id!);
-      setCurrentMonth(currentElem!);
-    }
-  }
+  const navigate = useNavigate();
 
   const preIndex = list.period.indexOf(currentMonth);
   const preMonth = list.period[preIndex + 1];
@@ -73,9 +49,54 @@ export const HomeProvider = ({ children }: Children) => {
     deltaDrainage * +price.drainage +
     +price.rent;
 
+  async function fetchPrice() {
+    // загрузка данных для авторизванного пользователя
+    try {
+      const res = await api.getPrice();
+      setList(res);
+      setValue(res.period[0].date);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async function fetchDelete() {
+    try {
+      await api.deletePeriod({
+        id: currentID,
+      });
+      fetchPrice();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const handleChange = (event: SelectChangeEvent) => {
+    //изменение значения селект
+    setValue(event.target.value);
+  };
+
+  function findID() {
+    //находим id выбранного периода
+
+    if (list.period.length !== 0) {
+      let periods = list.period;
+      let currentElem = periods.find((el) => Object.values(el).includes(value));
+      setcurrentID(currentElem?._id!);
+      setCurrentMonth(currentElem!);
+    }
+  }
+
+  function logout() {
+    //удаляем куки/выходим из аккаунта
+    removeCookie("userToken");
+    navigate("/login");
+  }
+
   useEffect(() => {
     fetchPrice();
   }, []);
+
   useEffect(() => {
     findID();
   }, [value]);
@@ -97,6 +118,8 @@ export const HomeProvider = ({ children }: Children) => {
         deltaElectricity,
         deltaDrainage,
         sum,
+        logout,
+        fetchDelete,
       }}
     >
       {children}

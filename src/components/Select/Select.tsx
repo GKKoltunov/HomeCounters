@@ -11,7 +11,7 @@ export default function SelectAutoWidth() {
   let periods = list!.period!;
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 80 }}>
+      <FormControl sx={{ m: 1, minWidth: 100 }}>
         <InputLabel id="demo-simple-select-autowidth-label">Месяц</InputLabel>
         <Select
           labelId="demo-simple-select-autowidth-label"
@@ -23,7 +23,7 @@ export default function SelectAutoWidth() {
         >
           {periods &&
             periods!.map((el: any) => (
-              <MenuItem key={el.id} value={el.date}>
+              <MenuItem key={el._id} value={el.date}>
                 {el.date.split("T")[0]}
               </MenuItem>
             ))}

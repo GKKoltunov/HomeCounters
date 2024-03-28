@@ -12,6 +12,7 @@ interface TypeContext {
       hot: string;
       electricity: string;
       drainage: string;
+      
     }>;
   };
   fetchPrice?: () => Object;
@@ -38,9 +39,9 @@ interface TypeContext {
 interface Period {
   find(arg0: (el: any) => any): unknown;
   map(arg0: (el: any) => import("react/jsx-runtime").JSX.Element): import("react").ReactNode;
-  _id: string;
-  date: string;
-  cold: string;
+  _id?: string;
+  date?: string;
+  cold?: string;
   hot: string;
   electricity: string;
   drainage: string;

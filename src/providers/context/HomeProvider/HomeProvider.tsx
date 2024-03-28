@@ -1,5 +1,5 @@
 import { HomeContext } from "./HomeContext";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import api from "../../../api";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { removeCookie } from "typescript-cookie";
@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 type Children = {
   children: ReactNode;
 };
+
+
 
 export const HomeProvider = ({ children }: Children) => {
   const [list, setList] = useState({
@@ -23,31 +25,45 @@ export const HomeProvider = ({ children }: Children) => {
       { _id: "", date: "", cold: "", hot: "", electricity: "", drainage: "" },
     ],
   });
+  
   const [value, setValue] = useState("");
   const [currentID, setcurrentID] = useState("");
   const [currentMonth, setCurrentMonth] = useState(list.period[0]);
   const navigate = useNavigate();
 
-  const preIndex = list.period.indexOf(currentMonth);
-  const preMonth = list.period[preIndex + 1];
-  const price = list.price;
 
   const hotCounter = currentMonth?.hot;
   const coldCounter = currentMonth?.cold;
   const electricityCounter = currentMonth?.electricity;
   const drainageCounter = currentMonth?.drainage;
+    
+  let deltaHot;
+  let deltaCold;
+  let deltaElectricity;
+  let deltaDrainage;
+  let sum;
 
-  const deltaHot = +hotCounter - +preMonth?.hot;
-  const deltaCold = +coldCounter - +preMonth?.cold;
-  const deltaElectricity = +electricityCounter - +preMonth?.electricity;
-  const deltaDrainage = deltaHot + deltaCold;
+ function math(){
+  const preIndex = list.period.findIndex((element)=>element._id===currentID);
+  const preMonth = list.period[preIndex + 1];
+  const price = list.price;
 
-  const sum =
+   deltaHot = +hotCounter - +preMonth?.hot;
+   deltaCold = +coldCounter - +preMonth?.cold;
+   deltaElectricity = +electricityCounter - +preMonth?.electricity;
+   deltaDrainage = deltaHot + deltaCold;
+
+   sum =
     deltaHot * +price.hot +
     deltaCold * +price.cold +
     deltaElectricity * +price.electricity +
     deltaDrainage * +price.drainage +
-    +price.rent;
+    +price.rent
+ }
+    
+ const calc = useMemo(()=>math(),[currentMonth])
+ 
+
 
   async function fetchPrice() {
     // загрузка данных для авторизванного пользователя
@@ -76,11 +92,11 @@ export const HomeProvider = ({ children }: Children) => {
   const handleChange = (event: SelectChangeEvent) => {
     //изменение значения селект
     setValue(event.target.value);
+    calc    
   };
 
   function findID() {
     //находим id выбранного периода
-
     if (list.period.length !== 0) {
       let periods = list.period;
       let currentElem = periods.find((el) => el.date === value);
@@ -99,9 +115,9 @@ export const HomeProvider = ({ children }: Children) => {
     fetchPrice();
   }, []);
 
-  useEffect(() => {
-    findID();
-  }, [value]);
+  useEffect(()=>{
+    findID()
+  },[value])
 
   return (
     <HomeContext.Provider

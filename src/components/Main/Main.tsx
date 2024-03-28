@@ -2,11 +2,14 @@ import { useContext } from "react";
 import { PriceList } from "../PriceList/PriceList";
 import SelectAutoWidth from "../Select/Select";
 import "./Main.scss";
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { HomeContext } from "../../providers/context/HomeProvider/HomeContext";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-// import { ModalContext } from "../../providers/context/ModalProvider/ModalContext";
+import WaterDropIcon from '@mui/icons-material/WaterDrop';
+import WaterIcon from '@mui/icons-material/Water';
+import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 
 type Props = {
   createPortal: () => void;
@@ -33,28 +36,25 @@ export const Main = ({createPortal, setIsOpen}:Props) => {
     <section className="container">
       <div className="calc">
         <div className="calc__period">
-          <button onClick={logout} className="logout">
-            <LogoutIcon />
-          </button>
+          <IconButton onClick={logout} >
+            <LogoutIcon color="primary" />
+          </IconButton>
 
           <div className="calc__period">
-            <button
+            <IconButton
               onClick={() => {
                 createPortal!();
                 setIsOpen(true)
               }}
-              className="logout"
+              
             >
-              <AddCircleOutlineOutlinedIcon />
-            </button>
-            <button
-              className="logout"
-              onClick={() => {
+              <AddCircleOutlineOutlinedIcon  color="primary"/>
+            </IconButton>
+            <IconButton onClick={() => {
                 fetchDelete!();
-              }}
-            >
-              <DeleteOutlineOutlinedIcon />
-            </button>
+              }} aria-label="delete">
+        <DeleteIcon  color="primary"/>
+      </IconButton>
             <p>Выберите период:</p>
             <SelectAutoWidth />
           </div>
@@ -62,10 +62,10 @@ export const Main = ({createPortal, setIsOpen}:Props) => {
         <table>
           <tr>
             <td></td>
-            <th>Горячая вода ♨️</th>
-            <th>Холодная вода 💧</th>
-            <th>Водоотвод 🚿</th>
-            <th>Электричество 💡</th>
+            <th>Горячая вода <WaterDropIcon fontSize="small"  color="action" /></th>
+            <th>Холодная вода <WaterDropIcon fontSize="small" color="primary"/></th>
+            <th>Водоотвод <WaterIcon fontSize="small" color="primary"/></th>
+            <th>Электричество <ElectricBoltIcon fontSize="small"/></th>
           </tr>
           <tr>
             <th>Показания:</th>

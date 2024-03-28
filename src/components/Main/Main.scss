@@ -14,7 +14,6 @@ width: 80%;
 height:500px;
 display: flex;
 flex-direction: column;
-background-color: rgb(89, 91, 205);
 justify-content: space-around;
 
 &__period{
@@ -37,13 +36,13 @@ gap: 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: rgb(89, 91, 205);
+ 
 
 }
 
 .logout{
   border: none;
-  background-color: rgb(89, 91, 205);
+
   color: white;
   cursor: pointer;
   transition: 0.5s;

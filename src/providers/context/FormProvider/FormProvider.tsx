@@ -1,41 +1,42 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { FormContext } from "./FormContext";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "typescript-cookie";
 import api from "../../../api";
 
 type Children = {
-  children: any;
+  children: ReactNode;
 };
 
 export const FormProvider = ({ children }: Children) => {
- 
   const navigate = useNavigate();
-  const [UserLogin, SetUserLogin] = useState("");
-  const [UserPassword, SetUserPassword] = useState("");
-  
+  const [userLogin, setUserLogin] = useState("");
+  const [userPassword, setUserPassword] = useState("");
 
-  const loginInput = document.getElementById("login") as HTMLInputElement;
-  const passwordInput = document.getElementById("password") as HTMLInputElement;
 
-  function SetLogin() {
-    SetUserLogin(loginInput?.value);
+
+  function setLogin(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    setUserLogin(event.target.value);
+    console.log(userLogin)
   }
 
-  function SetPassword() {
-    SetUserPassword(passwordInput?.value);
+  function setPassword(event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    setUserPassword(event.target.value);
+    console.log(userPassword)
   }
 
   async function fetchLogin() {
     try {
-      const res = await api.postUser({
-        username: UserLogin,
-        password: UserPassword,
-      });
-      setCookie('userToken', res.token);
-      
-      if (Object.keys(res).length !== 0) {
-        navigate("/");
+      if (userLogin && userPassword) {
+        const res = await api.postUser({
+          username: userLogin,
+          password: userPassword,
+        });
+        setCookie("userToken", res.token);
+
+        if (Object.keys(res).length !== 0) {
+          navigate("/");
+        }
       }
     } catch (e) {
       console.log(e);
@@ -43,13 +44,11 @@ export const FormProvider = ({ children }: Children) => {
     }
   }
 
-  
-
   return (
     <FormContext.Provider
       value={{
-        SetLogin,
-        SetPassword,
+        setLogin,
+        setPassword,
         fetchLogin,
       }}
     >

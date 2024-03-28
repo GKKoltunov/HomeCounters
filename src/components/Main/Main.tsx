@@ -6,12 +6,14 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { HomeContext } from "../../providers/context/HomeProvider/HomeContext";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+// import { ModalContext } from "../../providers/context/ModalProvider/ModalContext";
 
 type Props = {
   createPortal: () => void;
   setIsOpen: (isOpen: boolean) => void;
 };
-export const Main = ({ createPortal, setIsOpen }: Props) => {
+
+export const Main = ({createPortal, setIsOpen}:Props) => {
   const {
     hotCounter,
     coldCounter,
@@ -26,8 +28,8 @@ export const Main = ({ createPortal, setIsOpen }: Props) => {
     logout,
     fetchDelete,
   } = useContext(HomeContext);
-
-  return (
+  // const {createPortal,}= useContext(ModalContext)
+  return (<>
     <section className="container">
       <div className="calc">
         <div className="calc__period">
@@ -38,8 +40,8 @@ export const Main = ({ createPortal, setIsOpen }: Props) => {
           <div className="calc__period">
             <button
               onClick={() => {
-                setIsOpen(true);
-                createPortal();
+                createPortal!();
+                setIsOpen(true)
               }}
               className="logout"
             >
@@ -93,5 +95,6 @@ export const Main = ({ createPortal, setIsOpen }: Props) => {
         <PriceList />
       </div>
     </section>
+   </>
   );
 };

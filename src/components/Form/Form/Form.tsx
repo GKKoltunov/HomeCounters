@@ -4,17 +4,23 @@ import { useContext } from "react";
 import { FormContext } from "../../../providers/context/FormProvider/FormContext";
 
 export const Form = () => {
-  const { SetLogin, SetPassword, fetchLogin } = useContext(FormContext);
+  const { setLogin, setPassword, fetchLogin } = useContext(FormContext);
 
   return (
     <div className="authorization">
       <h1>Авторизация</h1>
-      <form className="authorization__form">
+      <form
+        onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+          event.preventDefault();
+          fetchLogin!();
+        }}
+        className="authorization__form"
+      >
         <label className="authorization__label" htmlFor="login">
           Введите логин:
         </label>
         <input
-          onChange={SetLogin}
+          onChange={setLogin}
           required
           maxLength={20}
           className="authorization__login"
@@ -26,7 +32,7 @@ export const Form = () => {
           Введите пароль:
         </label>
         <input
-          onChange={SetPassword}
+          onChange={setPassword}
           minLength={6}
           required
           className="authorization__password"
@@ -35,7 +41,7 @@ export const Form = () => {
           type="password"
         />
         <Button
-          onClick={fetchLogin}
+          type="submit"
           className="authorization__btn"
           variant="contained"
         >

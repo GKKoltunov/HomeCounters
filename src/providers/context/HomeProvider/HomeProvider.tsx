@@ -1,11 +1,11 @@
 import { HomeContext } from "./HomeContext";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import api from "../../../api";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { removeCookie } from "typescript-cookie";
 import { useNavigate } from "react-router-dom";
 type Children = {
-  children: any;
+  children: ReactNode;
 };
 
 export const HomeProvider = ({ children }: Children) => {
@@ -39,7 +39,7 @@ export const HomeProvider = ({ children }: Children) => {
 
   const deltaHot = +hotCounter - +preMonth?.hot;
   const deltaCold = +coldCounter - +preMonth?.cold;
-  const deltaElectricity = +hotCounter - +preMonth?.hot;
+  const deltaElectricity = +electricityCounter - +preMonth?.electricity;
   const deltaDrainage = deltaHot + deltaCold;
 
   const sum =
@@ -62,10 +62,12 @@ export const HomeProvider = ({ children }: Children) => {
 
   async function fetchDelete() {
     try {
-      await api.deletePeriod({
-        id: currentID,
-      });
-      fetchPrice();
+      if (currentID) {
+        await api.deletePeriod({
+          id: currentID,
+        });
+        fetchPrice();
+      }
     } catch (e) {
       console.log(e);
     }
@@ -81,7 +83,7 @@ export const HomeProvider = ({ children }: Children) => {
 
     if (list.period.length !== 0) {
       let periods = list.period;
-      let currentElem = periods.find((el) => Object.values(el).includes(value));
+      let currentElem = periods.find((el) => el.date === value);
       setcurrentID(currentElem?._id!);
       setCurrentMonth(currentElem!);
     }

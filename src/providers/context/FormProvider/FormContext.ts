@@ -1,8 +1,12 @@
 import { createContext } from "react";;
 
 interface TypeContext {
-  SetLogin?: () => void;
-  SetPassword?: () => void;
+  setLogin?: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  setPassword?: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   fetchLogin?: () => void;
   cookies?: Object;
   rent?: number;
@@ -10,7 +14,7 @@ interface TypeContext {
   cold?: number;
   internet?: number;
   electricity?: number;
-  periods?:Array<any>;
+  periods?: Array<any>;
 }
 
 const defaultState = { }

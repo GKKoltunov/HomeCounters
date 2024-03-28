@@ -3,10 +3,16 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 type Props = {
-  setValue: (event: any) => void;
-  changeElectric: () => void;
-  changeCold: () => void;
-  changeHot: () => void;
+  setValue: (event: React.FormEvent<HTMLFormElement>) => void;
+  changeElectric: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  changeCold: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  changeHot: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 };
 
 export default function Input({ setValue, changeHot, changeCold, changeElectric }: Props) {
@@ -26,7 +32,7 @@ export default function Input({ setValue, changeHot, changeCold, changeElectric 
         className="input"
         id="cold"
         label="Холодная вода "
-        variant="standard"
+        variant="outlined"
         onChange={changeCold}
         required
       />
@@ -48,7 +54,7 @@ export default function Input({ setValue, changeHot, changeCold, changeElectric 
         onChange={changeElectric}
         required
       />
-      <Button onClick={setValue} variant="contained">
+      <Button type="submit" variant="contained">
         Добавить показания
       </Button>
     </Box>

@@ -1,6 +1,8 @@
 import "./Modal.scss";
 import ReactDOM from "react-dom";
 import Input from "../Input/Input";
+
+
 import { useContext, useEffect, useState } from "react";
 import React from "react";
 import api from "../../api/";
@@ -14,16 +16,26 @@ type Elem = {
   current: null | any;
 };
 
-export const Modal = ({ setIsOpen }: Props) => {
-  const {fetchPrice} = useContext(HomeContext)
+export const Modal = ({ setIsOpen }:Props) => {
+  // const {
+  //   changeHot,
+  //   changeCold,
+  //   changeElectric,
+  //   newPeriod,
+  //   contentWrap,
+  //   portal,
+
+  // } = useContext(ModalContext);
+
+  const { fetchPrice } = useContext(HomeContext);
   const [hot, setHot] = useState("");
   const [cold, setCold] = useState("");
-  const [drainage, setDrainage] = useState('');
+  const [drainage, setDrainage] = useState("");
   const [electricity, setElectricity] = useState("");
 
   const portal = document.getElementById("portal")!;
   const contentWrap: Elem = React.createRef();
- 
+
   function closeModal(event: MouseEvent) {
     if (contentWrap.current && !contentWrap.current.contains(event.target)) {
       setIsOpen(false);
@@ -36,10 +48,8 @@ export const Modal = ({ setIsOpen }: Props) => {
     return () => {
       document.removeEventListener("mousedown", closeModal);
     };
-    
   }, [contentWrap]);
   const date = new Date().toISOString();
- 
 
   async function fetchPeriod() {
     try {
@@ -50,41 +60,37 @@ export const Modal = ({ setIsOpen }: Props) => {
         electricity: electricity,
         cold: cold,
       });
-      
     } catch (e) {
       console.log(e);
-      return
+      return;
     }
   }
 
-  const hotInput = document.getElementById("hot") as HTMLInputElement;
-  const coldInput = document.getElementById("cold") as HTMLInputElement;
-  const electricityInput = document.getElementById(
-    "electricity"
-  ) as HTMLInputElement;
-
-  function changeHot() {
-    setHot(hotInput?.value);
-
+  function changeHot(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setHot(e.target.value);
   }
 
-  function changeCold() {
-    setCold(coldInput?.value);
+  function changeCold(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setCold(e.target.value);
   }
 
-  function changeElectric() {
-    setElectricity(electricityInput?.value);
+  function changeElectric(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setElectricity(e.target.value);
   }
 
-  function newPeriod(event:any) {
+  function newPeriod(event: React.FormEvent<HTMLFormElement>) {
     event?.preventDefault();
-    setDrainage((+hot+ +cold).toString());
+    setDrainage((+hot + +cold).toString());
     setIsOpen(false);
     portal?.remove();
     fetchPeriod();
     fetchPrice!();
-    
-    
   }
 
   return ReactDOM.createPortal(
@@ -93,13 +99,13 @@ export const Modal = ({ setIsOpen }: Props) => {
         <h1>Заполните показания</h1>
 
         <Input
-          changeElectric={changeElectric}
-          changeCold={changeCold}
-          changeHot={changeHot}
-          setValue={newPeriod}
+          changeElectric={changeElectric!}
+          changeCold={changeCold!}
+          changeHot={changeHot!}
+          setValue={newPeriod!}
         />
       </div>
     </section>,
-    portal
+    portal!
   );
 };

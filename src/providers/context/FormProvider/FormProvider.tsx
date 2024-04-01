@@ -17,12 +17,12 @@ export const FormProvider = ({ children }: Children) => {
 
   function setLogin(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setUserLogin(event.target.value);
-    console.log(userLogin)
+    
   }
 
   function setPassword(event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setUserPassword(event.target.value);
-    console.log(userPassword)
+    
   }
 
   async function fetchLogin() {

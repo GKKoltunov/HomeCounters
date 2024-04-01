@@ -11,8 +11,8 @@ interface TypeContext {
   changeElectric?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
-  newPeriod?: (event: React.FormEvent<HTMLFormElement>) => void;
-  
+  newPeriod?: () => void;
+  changePeriod?:(event: React.FormEvent<HTMLFormElement>) => void;
   portal?: Element | DocumentFragment;
   isOpen?: boolean;
   createPortal?: () => void;

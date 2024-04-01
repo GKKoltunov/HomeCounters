@@ -1,106 +1,98 @@
-import "./Modal.scss";
-import ReactDOM from "react-dom";
-import Input from "../Input/Input";
-
-import { ModalContext } from "../../providers/context/ModalProvider/ModalContext";
-import { useContext, useEffect } from "react";
-import React from "react";
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContentText from '@mui/material/DialogContentText';
+import { FormEvent } from 'react';
 
 type Props = {
-  setIsOpen: (isOpen: boolean) => void;
+  changeHot?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  changeCold?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  changeElectric?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  action?: (event: FormEvent<HTMLFormElement>) => void;
+  closeAdd?: () => void;
+  open?: boolean;
+  title: string;
 };
 
-type Elem = {
-  contentWrap?: HTMLElement;
-  current: null | any;
-};
+export default function FormDialog({
+  closeAdd,
+  open,
+  changeCold,
+  changeElectric,
+  changeHot,
+  action,
+  title,
+}: Props) {
+  return (
+    <React.Fragment>
+      <Dialog
+        open={open!}
+        onClose={closeAdd}
+        PaperProps={{
+          component: 'form',
+          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            action!(event);
+            closeAdd!();
+          },
+        }}
+      >
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Для отправки данных введите показания каждого из счетчиков
+          </DialogContentText>
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="hot"
+            label="Горячая вода"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={changeHot}
+          />
 
-export const Modal = ({ setIsOpen }:Props) => {
-  const {
-    changeHot,
-    changeCold,
-    changeElectric,
-    newPeriod,
-    
-    
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="cold"
+            label="Холодная вода"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={changeCold}
+          />
 
-  } = useContext(ModalContext);
-
-
-
-  const portal = document.getElementById("portal")!;
-  const contentWrap: Elem = React.createRef();
-
-  function closeModal(event: MouseEvent) {
-    if (contentWrap.current && !contentWrap.current.contains(event.target)) {
-      setIsOpen(false);
-      portal?.remove();
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener("mousedown", closeModal);
-    return () => {
-      document.removeEventListener("mousedown", closeModal);
-    };
-  }, [contentWrap]);
-  // const date = new Date().toISOString();
-
-  // async function fetchPeriod() {
-  //   try {
-  //     await api.newPeriod({
-  //       date: date,
-  //       hot: hot,
-  //       drainage: drainage,
-  //       electricity: electricity,
-  //       cold: cold,
-  //     });
-  //   } catch (e) {
-  //     console.log(e);
-  //     return;
-  //   }
-  // }
-
-  // function changeHot(
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) {
-  //   setHot(e.target.value);
-  // }
-
-  // function changeCold(
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) {
-  //   setCold(e.target.value);
-  // }
-
-  // function changeElectric(
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) {
-  //   setElectricity(e.target.value);
-  // }
-
-  // function newPeriod(event: React.FormEvent<HTMLFormElement>) {
-  //   event?.preventDefault();
-  //   setDrainage((+hot + +cold).toString());
-  //   setIsOpen(false);
-  //   portal?.remove();
-  //   fetchPeriod();
-  //   fetchPrice!();
-  // }
-
-  return ReactDOM.createPortal(
-    <section className="modal">
-      <div className="modal__content" id="modal__content" ref={contentWrap}>
-        <h1>Заполните показания</h1>
-
-        <Input
-          changeElectric={changeElectric!}
-          changeCold={changeCold!}
-          changeHot={changeHot!}
-          setValue={newPeriod!}
-        />
-      </div>
-    </section>,
-    portal!
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="electricity"
+            label="Электричество"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={changeElectric}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeAdd}>Отмена</Button>
+          <Button type="submit">Отправить показания</Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
   );
-};
+}

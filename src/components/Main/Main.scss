@@ -1,9 +1,10 @@
 .container{
-  width: 100%;
+  max-width: 1200px;
   height: 100%;
   padding: 20px;
   display: flex;
   justify-content: space-between;
+  margin: 0 auto;
 }
 
 .calc{
@@ -40,23 +41,33 @@ gap: 20px;
 
 }
 
-.logout{
-  border: none;
 
-  color: white;
-  cursor: pointer;
-  transition: 0.5s;
-}
 
-.logout:hover{
-  transform: scale(130%);
-}
 
 td{
   text-align: center;
-  padding: 10px
+ 
 }
 
 th{
   padding-bottom: 10px;
+}
+
+
+.tooltip{
+  display: none;
+  font-size: 0.6rem;
+  padding: 5px; 
+  border-radius: 5px;
+}
+
+
+.btn:hover .tooltip{
+  display: inline;
+  background-color: aqua;
+  color: black;
+  position: absolute;
+  left: 100%;
+  bottom: 100%;
+
 }

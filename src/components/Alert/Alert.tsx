@@ -6,8 +6,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-
-
 type Props = {
   fetchDelete?: () => void;
   handleClose: () => void;
@@ -16,35 +14,37 @@ type Props = {
 
 export default function AlertDialog({ handleClose, open, fetchDelete }: Props) {
   return (
-  
-      <React.Fragment>
-        <Dialog
-       
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{'Внимание!'}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Вы действительно хотите удалить показания?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Отменить удаление</Button>
-            <Button
-              onClick={() => {
-                handleClose();
-                fetchDelete!();
-              }}
-              autoFocus
-            >
-              Удалить
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </React.Fragment>
-   
+    <React.Fragment>
+      <Dialog
+        PaperProps={{
+          style: {
+            backgroundColor: '#2f2954',
+          },
+        }}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{'Внимание!'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Вы действительно хотите удалить показания?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Отменить удаление</Button>
+          <Button
+            onClick={() => {
+              handleClose();
+              fetchDelete!();
+            }}
+            autoFocus
+          >
+            Удалить
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
   );
 }

@@ -5,6 +5,7 @@ import { CookiesProvider } from 'react-cookie';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
+
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -14,12 +15,14 @@ const darkTheme = createTheme({
 function App() {
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <CookiesProvider>
-          <RouterProvider router={router} />
-        </CookiesProvider>
-      </ThemeProvider>
+      
+        <ThemeProvider theme={darkTheme}>
+          <CssBaseline />
+          <CookiesProvider>
+            <RouterProvider router={router} />
+          </CookiesProvider>
+        </ThemeProvider>
+     
     </>
   );
 }

@@ -14,28 +14,23 @@ import { red } from '@mui/material/colors';
 import { yellow } from '@mui/material/colors';
 import { default as AlertDialog } from '../Alert/Alert';
 import { useState } from 'react';
-import { ModalContext } from '../../providers/context/ModalProvider/ModalContext';
 import { default as FormDialog } from '../Modal/Modal';
 import EditIcon from '@mui/icons-material/Edit';
+import { Typography } from '@mui/material';
+
+const ADDHEADING = 'Внесите новые показания';
+const EDITHEADING = 'Внесите изменения в показания';
 
 export const Main = () => {
   const {
+    calc,
     hotCounter,
     coldCounter,
     electricityCounter,
-    drainageCounter,
-    deltaHot,
-    deltaCold,
-    deltaElectricity,
-    deltaDrainage,
-    sum,
     value,
     logout,
     fetchDelete,
   } = useContext(HomeContext);
-
-  const { changeHot, changeCold, changeElectric, newPeriod, changePeriod } =
-    useContext(ModalContext);
 
   const [open, setOpen] = useState(false);
 
@@ -62,9 +57,6 @@ export const Main = () => {
   const closeEdit = () => {
     setEditOpen(false);
   };
-
-  const ADDHEADING = 'Внесите новые показания';
-  const EDITHEADING = 'Внесите изменения в показания';
 
   return (
     <>
@@ -94,7 +86,7 @@ export const Main = () => {
                 <span className="tooltip">Удалить показания</span>
                 <DeleteIcon color="primary" />
               </IconButton>
-              <p>Выберите период:</p>
+              <Typography variant='h6'>Выберите период:</Typography>
               <SelectAutoWidth />
             </div>
           </div>
@@ -104,18 +96,32 @@ export const Main = () => {
                 <td></td>
                 <th>
                   Горячая вода{' '}
-                  <WaterDropIcon fontSize="small" sx={{ color: red[500] }} />
+                  <WaterDropIcon
+                    className="icon"
+                    fontSize="small"
+                    sx={{ color: red[500] }}
+                  />
                 </th>
                 <th>
                   Холодная вода{' '}
-                  <WaterDropIcon fontSize="small" color="primary" />
+                  <WaterDropIcon
+                    className="icon"
+                    fontSize="small"
+                    color="primary"
+                  />
                 </th>
                 <th>
-                  Водоотвод <WaterIcon fontSize="small" color="primary" />
+                  Водоотвод{' '}
+                  <WaterIcon
+                    className="icon"
+                    fontSize="small"
+                    color="primary"
+                  />
                 </th>
                 <th>
                   Электричество{' '}
                   <ElectricBoltIcon
+                    className="icon"
                     fontSize="small"
                     sx={{ color: yellow[500] }}
                   />
@@ -123,25 +129,25 @@ export const Main = () => {
               </tr>
               <tr>
                 <th>Показания:</th>
-                <td>{hotCounter}</td>
-                <td>{coldCounter}</td>
-                <td>{drainageCounter}</td>
-                <td>{electricityCounter}</td>
+                <td>{(calc && calc.hotCounter) || ''}</td>
+                <td>{(calc && calc.coldCounter) || ''}</td>
+                <td>{(calc && calc.drainageCounter) || ''}</td>
+                <td>{(calc && calc.electricityCounter) || ''}</td>
               </tr>
               <tr>
                 <th>Расход:</th>
-                <td>{deltaHot}</td>
-                <td>{deltaCold}</td>
-                <td>{deltaDrainage}</td>
-                <td>{deltaElectricity}</td>
+                <td>{(calc && calc.deltaHot) || ''}</td>
+                <td>{(calc && calc.deltaCold) || ''}</td>
+                <td>{(calc && calc!.deltaDrainage) || ''}</td>
+                <td>{(calc && calc!.deltaElectricity) || ''}</td>
               </tr>
             </tbody>
           </table>
           <div className="calc__money">
-            <p>Сумма за месяц:</p>
+            <Typography variant="h6">Сумма за месяц:</Typography>
             {value === '' ? null : (
               <>
-                <p>{sum} руб</p>
+                <Typography variant='body1'>{calc && calc.sum} рублей</Typography>
               </>
             )}
           </div>
@@ -149,31 +155,33 @@ export const Main = () => {
         <div className="price">
           <PriceList />
         </div>
-
-        <FormDialog
-          title={EDITHEADING}
-          changeHot={changeHot}
-          changeCold={changeCold}
-          changeElectric={changeElectric}
-          action={changePeriod!}
-          open={editOpen}
-          closeAdd={closeEdit}
-        />
       </section>
       <AlertDialog
         handleClose={handleClose}
         open={open}
         fetchDelete={fetchDelete}
       />
-      <FormDialog
-        title={ADDHEADING}
-        changeHot={changeHot}
-        changeCold={changeCold}
-        changeElectric={changeElectric}
-        action={newPeriod!}
-        open={addOpen}
-        closeAdd={closeAdd}
-      />
+      {addOpen && (
+        <FormDialog
+          title={ADDHEADING}
+          typeOfAction="add"
+          open={addOpen}
+          closeAdd={closeAdd}
+        />
+      )}
+      {editOpen && (
+        <FormDialog
+          title={EDITHEADING}
+          typeOfAction="edit"
+          open={editOpen}
+          closeAdd={closeEdit}
+          initState={{
+            hot: hotCounter || '',
+            cold: coldCounter || '',
+            electricity: electricityCounter || '',
+          }}
+        />
+      )}
     </>
   );
 };

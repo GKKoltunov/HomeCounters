@@ -1,20 +1,10 @@
 import { createContext } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
+import { List, Period } from "./HomeProvider";
 
 
 interface TypeContext {
-  list?: {
-    price: Price;
-    period: Array<{
-      _id: string;
-      date: string;
-      cold: string;
-      hot: string;
-      electricity: string;
-      drainage: string;
-      
-    }>;
-  };
+  list?: List;
   fetchPrice?: () => Object;
   fetchDelete?: () => Object;
   value?: string;
@@ -23,9 +13,9 @@ interface TypeContext {
   currentID?: string;
   currentMonth?: Object;
   currentElem?: Period;
-  hotCounter?: string | number;
-  coldCounter?: string | number;
-  electricityCounter?: string | number;
+  hotCounter?: string ;
+  coldCounter?: string ;
+  electricityCounter?: string ;
   drainageCounter?: string | number;
   deltaHot?: number | string;
   deltaCold?: number | string;
@@ -33,28 +23,19 @@ interface TypeContext {
   deltaDrainage?: number | string;
   sum?: number | string;
   logout?: () => void;
+  calc?:Calc;
 }
 
-
-interface Period {
-  find(arg0: (el: any) => any): unknown;
-  map(arg0: (el: any) => import("react/jsx-runtime").JSX.Element): import("react").ReactNode;
-  _id?: string;
-  date?: string;
-  cold?: string;
-  hot: string;
-  electricity: string;
-  drainage: string;
-}
-
-interface Price {
-  cold: string;
-  hot: string;
-  internet: string;
-  electricity: string;
-  drainage: string;
-  rent: string;
-  _id: string;
+interface Calc {
+  deltaHot :number;
+   deltaCold :number;
+  deltaDrainage:number;
+  deltaElectricity:number;
+   sum:number;
+   hotCounter?: string ;
+  coldCounter?: string ;
+  electricityCounter?: string ;
+  drainageCounter?: string | number;
 }
 
 const defaultState = {};

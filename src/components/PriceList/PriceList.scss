@@ -1,7 +1,10 @@
 .price{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   &__heading{
-text-align: center;
-color: white;
+    text-align: center;
+    color: white;
   }
   &__article{
     padding: 10px;
@@ -10,5 +13,8 @@ color: white;
     gap: 10px;
     color: white;
     outline: 1px solid;
+  }
+  &__element{
+    font-weight: 600;
   }
 }

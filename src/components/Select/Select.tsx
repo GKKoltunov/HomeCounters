@@ -4,28 +4,15 @@ import Select from '@mui/material/Select';
 import { useContext } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import { HomeContext } from '../../providers/context/HomeProvider/HomeContext';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+
+dayjs.locale('ru');
 
 export default function SelectAutoWidth() {
   const { list, handleChange, value } = useContext(HomeContext);
 
   let periods = list!.period!;
-  // const arrMonth = [
-  //   'Январь',
-  //   'Февраль',
-  //   'Март',
-  //   'Апрель',
-  //   'Май',
-  //   'Июнь',
-  //   'Июль',
-  //   'Август',
-  //   'Сентябрь',
-  //   'Октябрь',
-  //   'Ноябрь',
-  //   'Декабрь',
-  // ];
-
-  // const month = new Date(Date.parse(value!)).getMonth();
-  // const year = new Date(Date.parse(value!)).getFullYear();
 
   return (
     <div>
@@ -42,7 +29,7 @@ export default function SelectAutoWidth() {
           {periods &&
             periods!.map((el: any) => (
               <MenuItem key={el._id} value={el.date}>
-                {el.date.split('T')[0]}
+                {dayjs(el.date).format('MMMM YYYY')}
               </MenuItem>
             ))}
         </Select>

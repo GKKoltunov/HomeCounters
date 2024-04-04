@@ -1,6 +1,6 @@
 import { ReactNode, useState } from 'react';
 import { useContext } from 'react';
-import React from 'react';
+
 import api from '../../../api';
 import { HomeContext } from '../HomeProvider/HomeContext';
 import { ModalContext } from './ModalContext';
@@ -52,27 +52,26 @@ export const ModalProvider = ({ children }: Children) => {
   }
 
   function changeHot(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    value: string
   ) {
-    setHot(e.target.value);
+    setHot(value);
   }
 
   function changeCold(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    value: string
   ) {
-    setCold(e.target.value);
+    setCold(value);
   }
 
   function changeElectric(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    value: string
   ) {
-    setElectricity(e.target.value);
+    setElectricity(value);
   }
 
   function newPeriod() {
     setDrainage((+hot + +cold).toString());
     fetchPeriod();
-    
   }
 
   function changePeriod() {
@@ -88,6 +87,7 @@ export const ModalProvider = ({ children }: Children) => {
         changeElectric,
         newPeriod,
         changePeriod,
+        hot, cold, electricity, drainage
       }}
     >
       {children}

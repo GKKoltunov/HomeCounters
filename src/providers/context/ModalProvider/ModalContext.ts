@@ -3,21 +3,25 @@ import { createContext } from "react";
 
 interface TypeContext {
   changeHot?: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+   value:string
   ) => void;
   changeCold?: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    value:string
   ) => void;
   changeElectric?: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    value:string
   ) => void;
   newPeriod?: () => void;
-  changePeriod?:(event: React.FormEvent<HTMLFormElement>) => void;
+  changePeriod?:() => void;
   portal?: Element | DocumentFragment;
   isOpen?: boolean;
   createPortal?: () => void;
-  
+  hot:string;
+  cold:string;
+   electricity:string;
+   drainage:string;
 }
 
-const defaultState = {};
+const defaultState = {hot:'',cold:'', electricity:'', drainage:''}
+  
 export const ModalContext = createContext<TypeContext>(defaultState);

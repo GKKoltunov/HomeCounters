@@ -1,7 +1,7 @@
-import { Button } from "@mui/material";
-import "./Form.scss";
-import { useContext } from "react";
-import { FormContext } from "../../../providers/context/FormProvider/FormContext";
+import { Button } from '@mui/material';
+import './Form.scss';
+import { useContext } from 'react';
+import { FormContext } from '../../providers/context/FormProvider/FormContext';
 
 export const Form = () => {
   const { setLogin, setPassword, fetchLogin } = useContext(FormContext);
